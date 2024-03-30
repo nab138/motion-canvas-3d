@@ -116,12 +116,14 @@ export function signalableObject3D(object: THREE.Object3D): SignalableObject3D {
   const scaleSignal = createSignal<Vector3>([object.scale.x, object.scale.y, object.scale.z]);
   const quaternionSignal = createSignal<Quaternion>([object.quaternion.x, object.quaternion.y, object.quaternion.z, object.quaternion.w]);
   const lookAtSignal = createSignal<Vector3 | undefined>(undefined);
+  const noLookat = false;
+  
 
   const update = () => {
     object.position.set(...positionSignal());
     object.scale.set(...scaleSignal());
     const lookAt = lookAtSignal();
-    if (lookAt) {
+    if (!noLookat && lookAt) {
       // TODO: do something about quaternions
       object.lookAt(...lookAt);
     } else {
@@ -135,6 +137,7 @@ export function signalableObject3D(object: THREE.Object3D): SignalableObject3D {
     scale: scaleSignal,
     quaternion: quaternionSignal,
     lookAt: lookAtSignal,
+    noLookat,
     update,
   };
 }
