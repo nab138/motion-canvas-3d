@@ -108,7 +108,8 @@ export interface SignalableObject3D {
   quaternion: SimpleSignal<Quaternion, void>;
   lookAt: SimpleSignal<Vector3 | undefined, void>;
   object: THREE.Object3D;
-  noLookat: boolean;
+  noLookat: () => boolean;
+  setNoLookat: (value: boolean) => void;
   update(): void;
 }
 
